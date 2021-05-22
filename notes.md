@@ -1,6 +1,7 @@
 [toc]
 
 # Unit 1 Internet and IP
+
 The Internet dominant model is **a bidirectional, reliable byte stream.**
 Three networked applications:
 - World Wide Web(HTTP): client-server model
@@ -13,7 +14,7 @@ Data be sent by unit packets.
 
 The network-layered **packet** be drawn as datagram, containing **data, source, and destination.** Source and destination info part is called **header.**
 
-<img src="/home/han/.config/Typora/typora-user-images/image-20210523011317634.png" alt="image-20210523011317634" style="zoom:67%;" />
+<img src="img/image-20210523023224721.png" alt="image-20210523023224721" style="zoom:50%;" />
 
 We use the Internet Protocol(IP) as a must:
 
@@ -31,7 +32,7 @@ UDP (User Datagram Protocol):
 - Also in Transport Layer
 - Does **not guarantee** the correct deliver, no repetition, in order. But **higher efficiency**.
 
-<img src="/home/han/.config/Typora/typora-user-images/image-20210523012018158.png" alt="image-20210523012018158" style="zoom:60%;" />
+<img src="img/image-20210523023406505.png" alt="image-20210523023406505" style="zoom:50%;" />
 
 IP is called “thin waist”, for there are many choices on the top and under the Network Layer, but in Network Layer IP is the only choice.
 
@@ -39,15 +40,15 @@ IP is called “thin waist”, for there are many choices on the top and under t
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | HTTP: <br/>- Generate request message according to target web server.<br/>- Precoss the requested content. | TCP:<br/>- Devided the HTTP message into segments, in sequence. Then pass them reliably.<br/>- Receive the segments and re-structure the seg,ents in sequence. | IP:<br/>- Searching for target address, passing while routing. |
 
-<img src="/home/han/.config/Typora/typora-user-images/image-20210523012810628.png" alt="image-20210523012810628" style="zoom:50%;" />
+<img src="img/image-20210523023428485.png" alt="image-20210523023428485" style="zoom:33%;" />
 
 ## The IP Service
 
-<img src="/home/han/.config/Typora/typora-user-images/image-20210523013017714.png" alt="image-20210523013017714" style="zoom:50%;" />
+<img src="img/image-20210523023441170.png" alt="image-20210523023441170" style="zoom:33%;" />
 
 **The IP service model**:
 
-In which the packet jumps among the routers (in which there are routing tables) in the path towards its destination. Routers in the path dunno its destination but the each other of themselves.<img src="/home/han/.config/Typora/typora-user-images/image-20210523013234608.png" alt="image-20210523013234608" style="zoom:57%;" />
+In which the packet jumps among the routers (in which there are routing tables) in the path towards its destination. Routers in the path dunno its destination but the each other of themselves.<img src="img/image-20210523023452709.png" alt="image-20210523023452709" style="zoom:50%;" />
 
 **The reasons for IP being so simple:**
 
@@ -68,7 +69,7 @@ In which the packet jumps among the routers (in which there are routing tables) 
 
 ### What’s in a Datagram
 
-<img src="/home/han/.config/Typora/typora-user-images/image-20210523014241591.png" alt="image-20210523014241591" style="zoom:40%;" />
+<img src="img/image-20210523023530773.png" alt="image-20210523023530773" style="zoom: 33%;" />
 
 - The most important parts are **DA (Destination IP address)** and **SA (Source IP Address)**.
 - Protocol ID part tells what is in data field, helping destination host correctly process the packet.
@@ -116,7 +117,7 @@ Above is how a normal address looks like, IP address in Network Layer and TCP po
 
 **A forwarding table in a router:**
 
-<img src="/home/han/.config/Typora/typora-user-images/image-20210523020159039.png" alt="image-20210523020159039" style="zoom:50%;" />
+<img src="img/image-20210523023511449.png" alt="image-20210523023511449" style="zoom:50%;" />
 
 The router will send the packet to the matched entry pattern, which is the ***most specific*** match.
 
