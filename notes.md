@@ -1,9 +1,12 @@
+
+
 [toc]
 
 # Unit 1 Internet and IP
 
 The Internet dominant model is **a bidirectional, reliable byte stream.**
 Three networked applications:
+
 - World Wide Web(HTTP): client-server model
 - BitTorrent: peer-to-peer model, *client - Tracker - other clients*
 - Skype: Mix of the both, *depends on if Skype clients can directly commu*
@@ -32,7 +35,7 @@ UDP (User Datagram Protocol):
 - Also in Transport Layer
 - Does **not guarantee** the correct deliver, no repetition, in order. But **higher efficiency**.
 
-<img src="img/image-20210523023406505.png" alt="image-20210523023406505" style="zoom:50%;" />
+<img src="img/image-20210523023406505.png" alt="image-20210523023406505" style="zoom:45%;" />
 
 IP is called “thin waist”, for there are many choices on the top and under the Network Layer, but in Network Layer IP is the only choice.
 
@@ -40,15 +43,17 @@ IP is called “thin waist”, for there are many choices on the top and under t
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | HTTP: <br/>- Generate request message according to target web server.<br/>- Precoss the requested content. | TCP:<br/>- Devided the HTTP message into segments, in sequence. Then pass them reliably.<br/>- Receive the segments and re-structure the seg,ents in sequence. | IP:<br/>- Searching for target address, passing while routing. |
 
-<img src="img/image-20210523023428485.png" alt="image-20210523023428485" style="zoom:33%;" />
+<img src="img/image-20210523023428485.png" alt="image-20210523023428485" style="zoom:43%;" />
 
 ## The IP Service
 
-<img src="img/image-20210523023441170.png" alt="image-20210523023441170" style="zoom:33%;" />
+<img src="img/image-20210523023441170.png" alt="image-20210523023441170" style="zoom:47%;" />
 
 **The IP service model**:
 
-In which the packet jumps among the routers (in which there are routing tables) in the path towards its destination. Routers in the path dunno its destination but the each other of themselves.<img src="img/image-20210523023452709.png" alt="image-20210523023452709" style="zoom:50%;" />
+In which the packet jumps among the routers (in which there are routing tables) in the path towards its destination. Routers in the path dunno its destination but the each other of themselves.
+
+<img src="img/image-20210523023452709.png" alt="image-20210523023452709" style="zoom:45%;" />
 
 **The reasons for IP being so simple:**
 
@@ -69,7 +74,7 @@ In which the packet jumps among the routers (in which there are routing tables) 
 
 ### What’s in a Datagram
 
-<img src="img/image-20210523023530773.png" alt="image-20210523023530773" style="zoom: 33%;" />
+<img src="img/image-20210523023530773.png" alt="image-20210523023530773" style="zoom: 43%;" />
 
 - The most important parts are **DA (Destination IP address)** and **SA (Source IP Address)**.
 - Protocol ID part tells what is in data field, helping destination host correctly process the packet.
@@ -93,25 +98,21 @@ In summary, IP provide a deliberately simple services:
 - Best-effort
 - Connectionless
 
-
-
 ## Life of a Packet
-
-
 
 ### TCP byte stream
 
 **Three-way handshake: *“SYN, SYN/ACK, ACK”***
 
-*form Client to Server:* Send a synchronized message, “SYN”
+*form Client to Server:* Send a synchronized message, ***“SYN”***
 
-*from Server to Client:* Response a synchronized message and acknowledges the clent’s synchronized, “SYN/ACK”
+*from Server to Client:* Response a synchronized message and acknowledges the clent’s synchronized, ***“SYN/ACK”***
 
-*from Client to Server:* Acknowlwdge server’s synchronize, “ACK”
+*from Client to Server:* Acknowlwdge server’s synchronize, ***“ACK”***
 
 ### Inside the Stream
 
-*Address format:* IPAddress:TCPPort
+*Address format:* **IPAddress:TCPPort** (e.g., **192.168.0.1:22**)
 
 Above is how a normal address looks like, IP address in Network Layer and TCP port in Transport Layer.
 
@@ -121,10 +122,50 @@ Above is how a normal address looks like, IP address in Network Layer and TCP po
 
 The router will send the packet to the matched entry pattern, which is the ***most specific*** match.
 
+The default route is the least specific route, matches every IP address.
+
 ### The tools
+
+**Wireshark:** Show all the packets, TCP byte stream establishment and data exchange
+
+**Traceroute:** Shows the route (all the routers it passed) that the packet took through Internet
 
 ## Principle: Packet Switching
 
+**Packet:** A self-contained <u>unit of data</u> that carries necessary <u>info</u>rmation to reach <u>destination</u>.
+
+<img src="img/image-20210523140136574.png" alt="image-20210523140136574" style="zoom: 43%;" />
+
+The packet will be routed between routers until it reached destination.
+
+**Packet switching:** Independently for each arriving packet, pick its outgoing link. Send it if the link is free, else hold it for later.
+
+Source routing/self-routing: The source sepecifies the route. (Not currently common for its big security issues)
+
+Nowdays we use the route table that in each switch, according to which the switch can tell the packet to destination goes to right next hop.
+
+Two consequences:
+
+1. Simple packet forwarding
+2. Efficient sharing of links
+
 ### No per-flow state required: Simple packet forwarding
 
+**Flow:** A collection of datagrams belonging to the same end-to-end communication, such as a TCP connection.
+
+Packet switching don’t need state for each flow, for each packet is self-conatined.
+
+- No per-flow state to be added/removed
+- No per-slow state to be stored
+- No per-flow state to be changed upon failure
+
+In one word, packet switching cares only about switching, do not deal with other issues!
+
 ### Efficient sharing of links
+
+*\*bursty: Occrurring at intervals in short, sudden episodes\**
+
+Data traffic is bursty
+
+- Packet switching allows flows to use all available link capacity.
+- Packet switching aloows flows to share link capacity.
