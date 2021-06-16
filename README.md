@@ -9,7 +9,7 @@ Three networked applications:
 
 - World Wide Web(HTTP): client-server model
 - BitTorrent: peer-to-peer model, *client - Tracker - other clients*
-- Skype: Mix of the both, *depends on if Skype clients can directly commu*
+- Skype: Mix of the both, *depends on if Skype clients can directly communication*
 
 ## The 4 Layer Internet Model
 
@@ -17,13 +17,13 @@ Data be sent by unit packets.
 
 The network-layered **packet** be drawn as datagram, containing **data, source, and destination.** Source and destination info part is called **header.**
 
-<img src="img/image-20210523023224721.png" alt="image-20210523023224721" style="zoom:50%;" />
+<img src="img/image-20210523023224721.png" alt="image-20210523023224721" style="zoom:40%;" />
 
 We use the Internet Protocol(IP) as a must:
 
 - IP makes a best effort attempt to deliver datagrams, but no promises.
-- IP datagrams can be lost, delivered out of order, corrupted, noguarantees.
-- To deal with the unpromised issuedm the other protocol on the top of IP needed in Transport Layer (i.e., Transmission Control Protocol).
+- IP datagrams can be lost, delivered out of order, corrupted, no guarantees.
+- To deal with the unpraised issued the other protocol on the top of IP needed in Transport Layer (i.e., Transmission Control Protocol).
 
 TCP:
 
@@ -35,30 +35,30 @@ UDP (User Datagram Protocol):
 - Also in Transport Layer
 - Does **not guarantee** the correct deliver, no repetition, in order. But **higher efficiency**.
 
-<img src="img/image-20210523023406505.png" alt="image-20210523023406505" style="zoom:45%;" />
+<img src="img/image-20210523023406505.png" alt="image-20210523023406505" style="zoom:38%;" />
 
 IP is called “thin waist”, for there are many choices on the top and under the Network Layer, but in Network Layer IP is the only choice.
 
 | Application Layer:                                           | Transport Layer:                                             | Network Layer:                                               |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| HTTP: <br/>- Generate request message according to target web server.<br/>- Precoss the requested content. | TCP:<br/>- Devided the HTTP message into segments, in sequence. Then pass them reliably.<br/>- Receive the segments and re-structure the seg,ents in sequence. | IP:<br/>- Searching for target address, passing while routing. |
+| HTTP: <br/>- Generate request message according to target web server.<br/>- Process the requested content. | TCP:<br/>- Divided the HTTP message into segments, in sequence. Then pass them reliably.<br/>- Receive the segments and re-structure the segments in sequence. | IP:<br/>- Searching for target address, passing while routing. |
 
-<img src="img/image-20210523023428485.png" alt="image-20210523023428485" style="zoom:43%;" />
+<img src="img/image-20210523023428485.png" alt="image-20210523023428485" style="zoom:33%;" />
 
 ## The IP Service
 
-<img src="img/image-20210523023441170.png" alt="image-20210523023441170" style="zoom:47%;" />
+<img src="img/image-20210523023441170.png" alt="image-20210523023441170" style="zoom:37%;" />
 
 **The IP service model**:
 
-In which the packet jumps among the routers (in which there are routing tables) in the path towards its destination. Routers in the path dunno its destination but the each other of themselves.
+In which the packet jumps among the routers (in which there are routing tables) in the path towards its destination. Routers in the path don't know its destination but the each other of themselves.
 
-<img src="img/image-20210523023452709.png" alt="image-20210523023452709" style="zoom:45%;" />
+<img src="img/image-20210523023452709.png" alt="image-20210523023452709" style="zoom:38%;" />
 
 **The reasons for IP being so simple:**
 
 - Simple, dumb, minimal = faster, more streamlined and lower cost to build and maintain.
-- The end-to-end princeple: Implement features in the end hosts as much as possible.
+- The end-to-end principle: Implement features in the end hosts as much as possible.
 - Allows a variety of dependable/unreliable services to be built on top.
 - Works over any link layer: IP makes few assumptions about the link layer below.
 
@@ -74,12 +74,12 @@ In which the packet jumps among the routers (in which there are routing tables) 
 
 ### What’s in a Datagram
 
-<img src="img/image-20210523023530773.png" alt="image-20210523023530773" style="zoom: 43%;" />
+<img src="img/image-20210523023530773.png" alt="image-20210523023530773" style="zoom: 40%;" />
 
 - The most important parts are **DA (Destination IP address)** and **SA (Source IP Address)**.
 - Protocol ID part tells what is in data field, helping destination host correctly process the packet.
 - Version field tells the version of the IP.
-- TTL part helps to stop the packet looping in teh Internet. Every router will decrement the TTL till it reaches 0.
+- TTL part helps to stop the packet looping in the Internet. Every router will decrement the TTL till it reaches 0.
 - The packet ID, Flags, Fragment Offset help router to fragment IP packet into smaller self-contained packets if needed.
 - Type of Service tells the importance of the packet.
 - Header Length tells how big the header is.
@@ -106,9 +106,9 @@ In summary, IP provide a deliberately simple services:
 
 *form Client to Server:* Send a synchronized message, ***“SYN”***
 
-*from Server to Client:* Response a synchronized message and acknowledges the clent’s synchronized, ***“SYN/ACK”***
+*from Server to Client:* Response a synchronized message and acknowledges the client’s synchronized, ***“SYN/ACK”***
 
-*from Client to Server:* Acknowlwdge server’s synchronize, ***“ACK”***
+*from Client to Server:* Acknowledge server’s synchronize, ***“ACK”***
 
 ### Inside the Stream
 
@@ -118,7 +118,7 @@ Above is how a normal address looks like, IP address in Network Layer and TCP po
 
 **A forwarding table in a router:**
 
-<img src="img/image-20210523023511449.png" alt="image-20210523023511449" style="zoom:50%;" />
+<img src="img/image-20210523023511449.png" alt="image-20210523023511449" style="zoom:40%;" />
 
 The router will send the packet to the matched entry pattern, which is the ***most specific*** match.
 
@@ -134,15 +134,15 @@ The default route is the least specific route, matches every IP address.
 
 **Packet:** A self-contained <u>unit of data</u> that carries necessary <u>info</u>rmation to reach <u>destination</u>.
 
-<img src="img/image-20210523140136574.png" alt="image-20210523140136574" style="zoom: 43%;" />
+<img src="img/image-20210523140136574.png" alt="image-20210523140136574" style="zoom: 38%;" />
 
 The packet will be routed between routers until it reached destination.
 
 **Packet switching:** Independently for each arriving packet, pick its outgoing link. Send it if the link is free, else hold it for later.
 
-Source routing/self-routing: The source sepecifies the route. (Not currently common for its big security issues)
+Source routing/self-routing: The source specifies the route. (Not currently common for its big security issues)
 
-Nowdays we use the route table that in each switch, according to which the switch can tell the packet to destination goes to right next hop.
+Nowadays we use the route table that in each switch, according to which the switch can tell the packet to destination goes to right next hop.
 
 Two consequences:
 
@@ -153,7 +153,7 @@ Two consequences:
 
 **Flow:** A collection of datagrams belonging to the same end-to-end communication, such as a TCP connection.
 
-Packet switching don’t need state for each flow, for each packet is self-conatined.
+Packet switching don’t need state for each flow, for each packet is self-contained.
 
 - No per-flow state to be added/removed
 - No per-slow state to be stored
@@ -168,4 +168,29 @@ In one word, packet switching cares only about switching, do not deal with other
 Data traffic is bursty
 
 - Packet switching allows flows to use all available link capacity.
-- Packet switching aloows flows to share link capacity.
+- Packet switching allows flows to share link capacity.
+
+## Principle: Layering
+
+### Definition
+
+> Layers are separate, functional components, that are hierarchical and communicating sequentially with its direct neighbours, above or below. Each layer provides service to the layer above, using the services from the layers below and its own processing. 
+
+A good example of layering is **postal or express service**. 
+
+> ​    	**sender** >> postman >> local site >> regional centre (near to sender) >>
+>
+> ​		**receiver** << postman << local site << regional centre (near to receiver)
+
+In the above, each layer is separated, and does not care about how other layers work apart from its neighbouring layers. Also, they do not affect each other.
+
+### Reasons for layering
+
+1. Modularity
+2. Well defined service
+3. Reuse
+4. Separation of concerns
+5. Continuous improvement
+
+## Principle: Encapsulation
+
