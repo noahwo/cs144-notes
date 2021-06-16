@@ -2,6 +2,25 @@
 
 [toc]
 
+#### Table of Content
+
+[Unit 1 Internet and IP](#unit-1-internet-and-ip)
+
+- [The 4 Layer Internet Model](#the-4-layer-internet-model)
+- [The IP Service](#the-ip-service)
+   - [What's in a Datagram](#whats-in-a-datagram)
+- [Life of a Packet](#life-of-a-packet)
+   - [TCP Byte Stream](#tcp-byte-stream)
+   - [Inside the Stream](#inside-the-stream)
+   - [The tools](#the-tools)
+- [Principle: Packet Switching](#principle-packet-switching)
+   - [No Per-Flow State Required: Simple Packet Forwarding](#no-per-flow-state-required-simple-packet-forwarding)
+   - [Efficient Sharing of Links](#efficient-sharing-of-links)
+- [Principle: Layering](#principle-layering)
+   - [Definition](#definition)
+   - [Reasons for Layering](#reasons-for-layering)
+- [Principle: Encapsulation](#principle-encapsulation)
+
 # Unit 1 Internet and IP
 
 The Internet dominant model is **a bidirectional, reliable byte stream.**
@@ -100,7 +119,7 @@ In summary, IP provide a deliberately simple services:
 
 ## Life of a Packet
 
-### TCP byte stream
+### TCP Byte Stream
 
 **Three-way handshake: *“SYN, SYN/ACK, ACK”***
 
@@ -149,7 +168,7 @@ Two consequences:
 1. Simple packet forwarding
 2. Efficient sharing of links
 
-### No per-flow state required: Simple packet forwarding
+### No per-flow State Required: Simple Packet Forwarding
 
 **Flow:** A collection of datagrams belonging to the same end-to-end communication, such as a TCP connection.
 
@@ -161,7 +180,7 @@ Packet switching don’t need state for each flow, for each packet is self-conta
 
 In one word, packet switching cares only about switching, do not deal with other issues!
 
-### Efficient sharing of links
+### Efficient Sharing of Links
 
 *\*bursty: Occrurring at intervals in short, sudden episodes\**
 
@@ -184,7 +203,7 @@ A good example of layering is **postal or express service**.
 
 In the above, each layer is separated, and does not care about how other layers work apart from its neighbouring layers. Also, they do not affect each other.
 
-### Reasons for layering
+### Reasons for Layering
 
 1. Modularity
 2. Well defined service
