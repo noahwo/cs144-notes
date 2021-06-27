@@ -19,7 +19,19 @@
 - [Principle: Layering](#principle-layering)
    - [Definition](#definition)
    - [Reasons for Layering](#reasons-for-layering)
+     - [It helps](#it-helps)
+     - [Summary](#summary)
 - [Principle: Encapsulation](#principle-encapsulation)
+   - [Definition](#definition)
+   - [Encapsulation Flexibility](#encapsulation-flexibility)
+   - [Reason for Encapsulation](#reason-for-capsulation)
+- [Memory, Byte Order, and Packet Formats](#memory-byte-order-and-packet-formats)
+- [Names and Addresses: IPv4](#names-and-addresses-ipv4)
+   - [Address Format](#address-format)
+   - [Historical Address Structure](#address-address-structure)
+   - [Today's Address Structure](#todays-address-structure)
+   - [IPv4 Address Assignment](#ipv4-address-assignment)
+- [Longest Prefix Match](#longest-prefix-match)
 
 # Unit 1 Internet and IP
 
@@ -95,7 +107,7 @@ In which the packet jumps among the routers (in which there are routing tables) 
 
 <img src="img/image-20210523023530773.png" alt="image-20210523023530773" style="zoom: 40%;" />
 
-- The most important parts are **DA (Destination IP address)** and **SA (Source IP Address)**.
+- The most important parts are **DA (Destination IP Address)** and **SA (Source IP Address)**.
 - Protocol ID part tells what is in data field, helping destination host correctly process the packet.
 - Version field tells the version of the IP.
 - TTL part helps to stop the packet looping in the Internet. Every router will decrement the TTL till it reaches 0.
@@ -106,9 +118,11 @@ In which the packet jumps among the routers (in which there are routing tables) 
 
 *Application Layer - stream of data*
 
-*Transport Layer - segments of data*
+*Transport Layer - segments of data (TCP segment)*
 
-*Network Layer - packet of data*
+*Network Layer - packet of data (IP packet)*
+
+*Link Layer - frame of data (Ethernet frame)*
 
 In summary, IP provide a deliberately simple services:
 
@@ -139,7 +153,7 @@ Above is how a normal address looks like, IP address in Network Layer and TCP po
 
 <img src="img/image-20210523023511449.png" alt="image-20210523023511449" style="zoom:40%;" />
 
-The router will send the packet to the matched entry pattern, which is the ***most specific*** match.
+The router will send the packet to the matched entry pattern, which is the ***most specific*** match. ***This is called Longest Prefix Match!***
 
 The default route is the least specific route, matches every IP address.
 
@@ -172,7 +186,7 @@ Two consequences:
 
 **Flow:** A collection of datagrams belonging to the same end-to-end communication, such as a TCP connection.
 
-Packet switching don’t need state for each flow, for each packet is self-contained.
+Packet switching don’t need state for each flow, since each packet is self-contained.
 
 - No per-flow state to be added/removed
 - No per-slow state to be stored
@@ -182,7 +196,7 @@ In one word, packet switching cares only about switching, do not deal with other
 
 ### Efficient Sharing of Links
 
-*\*bursty: Occrurring at intervals in short, sudden episodes\**
+*\*bursty: Occurring at intervals in short, sudden episodes\**
 
 Data traffic is bursty
 
@@ -205,6 +219,13 @@ In the above, each layer is separated, and does not care about how other layers 
 
 ### Reasons for Layering
 
+#### It helps
+
+- Separation of concerns and responsibilities
+- Allows each service to evolve independently
+
+#### Summary
+
 1. Modularity
 2. Well defined service
 3. Reuse
@@ -212,4 +233,86 @@ In the above, each layer is separated, and does not care about how other layers 
 5. Continuous improvement
 
 ## Principle: Encapsulation
+
+### Definition
+
+Encapsulation is a principle that helpful to maintain layering.
+
+It contributes to
+
+- Different protocol layers sharing storage with in the same packet
+
+<img src="img/image-20210627223254064.png" alt="image-20210627223254064" style="zoom:33%;" />
+
+As the figure shows, e.g., a data in a layer is encapsulated as the payload of a data in the next layer .
+
+*Note: The order of headers and footers depends on software side (headers-footers) or hardware side (footers-headers).*
+
+### Encapsulation Flexibility
+
+- Encapsulation allows layer recursively
+
+![image-20210628010253388](img/image-20210628010253388.png)
+
+- Virtual Private Network (VPN)
+  - HTTP application payload in
+  - a TCP transport segment in 
+  - an IP network packet in
+  - a secured TLS presentation message in 
+  - a TCP transport segment in 
+  - an IP network packet in 
+  - an Ethernet link frame
+
+### Reason for Encapsulation
+
+- Encapsulation is how layering manifests in data representation
+- Encapsulated payloads
+  - help separation of concerns
+  - help enforce boundaries/layering
+  - simplify layer implementations
+
+## Memory, Byte Order, and Packet Formats
+
+### didn't really understand this lesson...... and left empty temporarily
+
+## Names and Addresses: IPv4
+
+**Goal of IP addr:** Switch many different networks together, which needs network-independent , unique addr
+
+### Address Format
+
+- One addr identifies a device on the Internet, on Network (3rd) Layer
+- 32 bits long, separated to 4 octets: **a.b.c.d**
+- Netmask: apply this mask, if the mask is the same as an addr, in the same network. It defines how the addr is cut into two parts (network+host)
+  - e.g., 255.255.255.0 means if the first 24 bits ( first 3 octets) of two addrs match, the two in the same network
+  - e.g., netmask 255.255.255.0 means 11111111.11111111.11111111.00000000
+  - Smaller netmask (fewer 1s) means larger network
+
+### Historical Address Structure
+
+**network + host**, in which,
+
+- Network to get to correct network
+- Host to get to correct device in that network
+
+3 classes of network: class A, class B, class C 
+
+![image-20210623133949485](img/image-20210623133949485.png)
+
+### Today's Address Structure
+
+**Classless Inter-Domain Routing (CIDR)**
+
+- Addr block is a pair: *addr/count*
+
+- Counts are powers of 2 (count/2=nR0), specify netmask length
+
+- 192.168.0.0/16 means the first 16 digits of the 32 digits are network addr
+- A/24 has 256 addrs, A/20 has 4,096 addrs
+
+### IPv4 Address Assignment
+
+ICANN (Internet Corporation for Assignment of Names and Numbers) is responsible for IANA (Internet Assigned Numbers Authority)
+
+## Longest Prefix Match
 
