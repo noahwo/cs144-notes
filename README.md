@@ -298,9 +298,25 @@ is how you arrange a multibyte value in memory
 
 - Endianness vary according to the platforms
   - ARM processors use big endian, x86 processors use little endian
+  
 - Network byte order is big endian
+  **In network byte order**:
+  1,024 = 0x400 = 0x40 0x00
 
-![](img/image-20210628232746444.png)
+  ```c
+  // A simple C program to test for endianess of processor
+  uint16_t cal = 0x400;
+  uint8_t* ptr = (uint8_t*)&val;
+  if (ptr[0] == 0x40){
+      printf("big endian\n");
+  }
+  else if  (ptr[1] == 0x40){
+      printf("little endian\n");
+  }
+  else {
+      printf("unknown endianness!\n");
+  }
+  ```
 
 ### Portable Code
 
