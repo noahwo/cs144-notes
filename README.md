@@ -105,7 +105,9 @@ In which the packet jumps among the routers (in which there are routing tables) 
 
 ### What’s in a Datagram
 
-<img src="img/image-20210523023530773.png" alt="image-20210523023530773" style="zoom: 40%;" />
+<img src="img/image-20210523023530773.png" alt="image-20210523023530773" style="zoom: 33%;" />
+
+- Header is 32 bits or 4 bytes long
 
 - The most important parts are **DA (Destination IP Address)** and **SA (Source IP Address)**.
 - Protocol ID part tells what is in data field, helping destination host correctly process the packet.
@@ -167,7 +169,7 @@ The default route is the least specific route, matches every IP address.
 
 **Packet:** A self-contained <u>unit of data</u> that carries necessary <u>info</u>rmation to reach <u>destination</u>.
 
-<img src="img/image-20210523140136574.png" alt="image-20210523140136574" style="zoom: 38%;" />
+<img src="img/image-20210523140136574.png" alt="image-20210523140136574" style="zoom: 33%;" />
 
 The packet will be routed between routers until it reached destination.
 
@@ -179,8 +181,8 @@ Nowadays we use the route table that in each switch, according to which the swit
 
 Two consequences:
 
-1. Simple packet forwarding
-2. Efficient sharing of links
+- Simple packet forwarding
+- Efficient sharing of links
 
 ### No per-flow State Required: Simple Packet Forwarding
 
@@ -252,7 +254,7 @@ As the figure shows, e.g., a data in a layer is encapsulated as the payload of a
 
 - Encapsulation allows layer recursively
 
-![image-20210628010253388](img/image-20210628010253388.png)
+<img src="img/image-20210628010253388.png" alt="image-20210628010253388" style="zoom: 50%;" />
 
 - Virtual Private Network (VPN)
   - HTTP application payload in
@@ -273,9 +275,61 @@ As the figure shows, e.g., a data in a layer is encapsulated as the payload of a
 
 ## Memory, Byte Order, and Packet Formats
 
-### didn't really understand this lesson...... and left empty temporarily
+A memory of 8 GB is a huge chunk of bits from position 0x0000000000 to position 0x0200000000, which indicates 8 GB.
+
+<img src="img/image-20210628230538807.png" alt="image-20210628230538807" style="zoom:50%;" />
+
+### Endianness
+
+is how you arrange a multibyte value in memory
+
+#### Two types of endianness:
+
+- **Little Endian**: The least significant byte is at the lowest address (comes first)
+  - Standing on the addressing/computational point 
+- **Big Endian**: The most significant byte comes first
+  - From a perspective from human reading
+
+***It is necessary to understand this quiz thoroughly:***
+
+![image-20210628231942233](img/image-20210628231942233.png)
+
+### Network Byte Order
+
+- Endianness vary according to the platforms
+  - ARM processors use big endian, x86 processors use little endian
+- Network byte order is big endian
+
+![](img/image-20210628232746444.png)
+
+### Portable Code
+
+- Necessary to convert byte order values to host order
+
+- E.g., packet has a 16-bit port in network byte order, when using a struct to access it, to check on the x86 processor if the port is 80
+
+  ```c
+  uint16_t http_port = 80; //Host order
+  If (packet->port == http_port){...//Network vs. host order; 0x00 0x50 (network) != 0x50 0x00 (host)
+  ```
+
+- Helper  functions: htons(), ntohs(), htonl(), ntohl()
+
+  - ntohs: host to network short; ntohl: network to host long
+
+  - ```c
+    #include <arpa/inet.h>
+    
+    uint_t http_port = 80; //Host order
+    uint16_t packet_port = ntohs(packet->port);
+    if (packet_port == http_port){....//Works this way
+    ```
+
+- **so it is greatly import to be careful when handling network data (convertion)**
 
 ## Names and Addresses: IPv4
+
+Routers decide which link to forward a packet over based on the packet's DA
 
 **Goal of IP addr:** Switch many different networks together, which needs network-independent , unique addr
 
@@ -297,7 +351,7 @@ As the figure shows, e.g., a data in a layer is encapsulated as the payload of a
 
 3 classes of network: class A, class B, class C 
 
-![image-20210623133949485](img/image-20210623133949485.png)
+<img src="img/image-20210623133949485.png" alt="image-20210623133949485" style="zoom: 40%;" />
 
 ### Today's Address Structure
 
@@ -307,7 +361,7 @@ As the figure shows, e.g., a data in a layer is encapsulated as the payload of a
 
 - Counts are powers of 2 (count/2=nR0), specify netmask length
 
-- 192.168.0.0/16 means the first 16 digits of the 32 digits are network addr
+- 192.168.0.0/16 means the first 16 digits of the 32 digits are network addr, and the other 9 digits are host addr
 - A/24 has 256 addrs, A/20 has 4,096 addrs
 
 ### IPv4 Address Assignment
